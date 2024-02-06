@@ -22,7 +22,7 @@ function createCompleteUndirectedGraph(node_names) {
             // Avoid self-edges
             if (i !== j) {
                 graph.push([node_names[i], node_names[j]]);
-                graph.push([node_names[j], node_names[i]]);
+                // graph.push([node_names[j], node_names[i]]);
             }
         }
     }
@@ -68,9 +68,6 @@ rl.on('close', () => {
         const bib_json = JSON.parse(line.substring(delimit_index + 1));
         bib_map_year.set(bib_id, bib_json.year);
         br += 1;
-        if (br%1000 == 0) {
-            console.log(br);
-        }
     });
 
     rl1.on("close", () => {
@@ -81,7 +78,11 @@ rl.on('close', () => {
                 continue;
             }
             for (const g of graph) {
-                const year = bib_map_year.get(key) !== undefined ? bib_map_year.get(key) : -1;
+                const get_year = bib_map_year.get(key);
+                const year = get_year !== undefined && !isNaN(get_year) ? parseInt(get_year) : -1;
+                if (year != -1 && year < 1000) {
+                    year += 2000;
+                }
                 console.log(g[0], g[1], year);
             }
         }
