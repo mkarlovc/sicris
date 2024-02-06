@@ -55,14 +55,35 @@ rl.on('line', (line) => {
 
 // Event listener for when the file is fully read
 rl.on('close', () => {
-    for (const key of bibmap.keys()) {
-        const nodes = bibmap.get(key);
-        const graph = createCompleteUndirectedGraph(nodes);
-        if (graph === null) {
-            continue;
+    const file_path_bib = "./data/bibliography.ldjson"
+    const rl1 = readline.createInterface({
+        input: fs.createReadStream(file_path_bib),
+        crlfDelay: Infinity // To handle Windows line endings
+    });
+    const bib_map_year = new Map();
+    let br = 0;
+    rl1.on("line", (line) => {
+        const delimit_index = line.indexOf(" ");
+        const bib_id = line.substring(0, delimit_index).trim();
+        const bib_json = JSON.parse(line.substring(delimit_index + 1));
+        bib_map_year.set(bib_id, bib_json.year);
+        br += 1;
+        if (br%1000 == 0) {
+            console.log(br);
         }
-        for (const g of graph) {
-            console.log(g[0], g[1]);
+    });
+
+    rl1.on("close", () => {
+        for (const key of bibmap.keys()) {
+            const nodes = bibmap.get(key);
+            const graph = createCompleteUndirectedGraph(nodes);
+            if (graph === null) {
+                continue;
+            }
+            for (const g of graph) {
+                const year = bib_map_year.get(key) !== undefined ? bib_map_year.get(key) : -1;
+                console.log(g[0], g[1], year);
+            }
         }
-    }
+    });
 });
