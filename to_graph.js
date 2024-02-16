@@ -79,9 +79,16 @@ rl.on('close', () => {
             }
             for (const g of graph) {
                 const get_year = bib_map_year.get(key);
-                const year = get_year !== undefined && !isNaN(get_year) ? parseInt(get_year) : -1;
-                if (year != -1 && year < 1000) {
+                let year = get_year !== undefined && !isNaN(get_year) ? parseInt(get_year) : -1;
+                if (year != -1 && year < 30) {
                     year += 2000;
+                } else if (year != -1 && year < 100) {
+                    year += 1000;
+                } else if (year != -1 && year < 1000 && year > 960) {
+                    year += 1000;
+                }
+                if (year > 2024 || year < 1900) {
+                    year = -1;
                 }
                 console.log(g[0], g[1], year);
             }
