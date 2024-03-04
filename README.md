@@ -36,3 +36,34 @@ researcher2 researcher3 2021
 researcher1 researcher3 2022
 ```
 
+# Rename nodes with 0-based index
+
+Create a new edge list with renamed nodes, such that the smallest index is 0 and the largest is N-1. The scripts outputs the new edge list (graph_zero_index.csv), as well as the node name mapping (nodeid_mapping.csv). It requires `./data/g_rsr_bybib_year_sort.csv` file for the input.
+
+```
+node edgelist_rename.js
+```
+
+output (graph_zero_index.csv):
+```
+0,1,-1
+0,1,-1
+0,2,-1
+0,2,-1
+```
+
+output (graph_zero_index.csv):
+```
+0,1,-1
+0,1,-1
+0,2,-1
+0,2,-1
+```
+output (nodeid_mapping.csv):
+```
+00001,0
+00051,1
+00058,2
+00086,3
+00094,4
+```
