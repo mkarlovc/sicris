@@ -51,14 +51,6 @@ output (graph_zero_index.csv):
 0,2,-1
 0,2,-1
 ```
-
-output (graph_zero_index.csv):
-```
-0,1,-1
-0,1,-1
-0,2,-1
-0,2,-1
-```
 output (nodeid_mapping.csv):
 ```
 00001,0
