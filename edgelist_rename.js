@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 const readline = require('readline');
 const fs = require('fs');
 
